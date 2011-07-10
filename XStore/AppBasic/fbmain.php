@@ -1,18 +1,9 @@
 <?php
 /*
- * @author: Mahmud Ahsan (http://thinkdiff.net)
+ * @author: Joe Li
  */
-    //facebook application
-    $fbconfig['appid' ]     = "";
-    $fbconfig['secret']     = "";
-    $fbconfig['baseurl']    = ""; //"http://thinkdiff.net/demo/newfbconnect1/php/sdk3/index.php";
-
-    $lib_path = realpath(dirname(__FILE__))."/../lib";
-    $conf_path = realpath(dirname(__FILE__))."/../conf";
-    error_log( $lib_path);
-    error_log( $conf_path);
-    require_once($lib_path."/facebook-php-sdk/src/facebook.php");
-    require_once('./app_conf.php');
+    
+require_once("./common.php");
     
     //
     if (isset($_GET['request_ids'])){
@@ -29,8 +20,8 @@
 //    }
     // Create our Application instance.
     $facebook = new Facebook(array(
-      'appId'  => $fbconfig['appid'],
-      'secret' => $fbconfig['secret'],
+      'appId'  => $fb_config['appid'],
+      'secret' => $fb_config['secret'],
       'cookie' => true,
     ));
 
@@ -47,7 +38,7 @@
     $loginUrl   = $facebook->getLoginUrl(
             array(
                 'scope'         => 'email,offline_access,publish_stream,user_birthday,user_location,user_work_history,user_about_me,user_hometown',
-                'redirect_uri'  => $fbconfig['baseurl']
+                'redirect_uri'  => $fb_config['baseurl']
             )
     );
     
@@ -97,7 +88,7 @@
             } catch (FacebookApiException $e) {
                 d($e);
             }
-            $redirectUrl     = $fbconfig['baseurl'] . '/index.php?success=1';
+            $redirectUrl     = $fb_config['baseurl'] . '/index.php?success=1';
             header("Location: $redirectUrl");
         }
 
@@ -131,4 +122,3 @@
         print_r($d);
         echo '</pre>';
     }
-?>
