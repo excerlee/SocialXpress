@@ -40,11 +40,13 @@ function parsePageSignedRequest( $req ) {
     return false;
 }
   if($signed_request = parsePageSignedRequest($req)) {
-    if($signed_request->page->liked) {
-      echo "This content is for Fans only!";
-    } else {
-      echo "Please click on the Like button to view this tab!";
-    }
+	#var_dump($signed_request);
+    if($signed_request->page->liked): ?>
+	<a target='_blank' href="<?php echo $store_config['fanBannerActionUrl'];?>"><img src="<?php echo $store_config['fanBannerUrl'];?>"></a>
+    <?php else: ?>
+	<a target='_blank' href="<?php echo $store_config['welcomeBannerActionUrl'];?>"><img src="<?php echo $store_config['welcomeBannerUrl'];?>"></a>
+    <?php
+    endif;
   }
 
 ?>
