@@ -11,5 +11,11 @@ $fb_config = array(
   'baseurl' => 'http://localhost/AppBasic/index.php',
 );
 
+//The config below should be stored in a database 
+$store_config = array(
+    'feedUrl' => 'http://www.brilliantstore.com/rss/rss.php?c=294',
+    'storeName' => 'Brilliant Store',
+);
+
 
 
