@@ -1,7 +1,6 @@
 <?php
 //require_once("../conf/global_conf.php");
 
-$app_canvas_url = "http://localhost/AppBasic/";
 
 $fb_config = array(
   'appName' => 'Basic Store',
@@ -25,3 +24,5 @@ $store_config = array(
 				  3=>'http://www.brilliantstore.com/promotion/facebook/list.html'
 				 ),
 );
+
+include("./app_conf.overrides.php");

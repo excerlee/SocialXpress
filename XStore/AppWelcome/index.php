@@ -39,19 +39,30 @@ function parsePageSignedRequest( $req ) {
     }
     return false;
 }
-  if($signed_request = parsePageSignedRequest($req)) {
-	#var_dump($signed_request);
-    if($signed_request->page->liked): 
-	foreach ( $store_config['fanPageImages'] as $id=>$imgUrl): ?>
-		<a target='_blank' href="<?php echo $store_config['fanPageImageTargetUrls'][$id] ;?>"><img src="<?php echo $imgUrl ;?>" width=500></a>
-	<?php endforeach; ?>
-    <?php else: 
-	foreach ( $store_config['welcomeImages'] as $id=>$imgUrl): ?>
-		<a target='_blank' href="<?php echo $store_config['welcomeImageTargetUrls'][$id] ;?>"><img src="<?php echo $imgUrl ;?>" width=500></a>
-	<?php endforeach; ?>
-    <?php
-    endif;
-  }
+
+function renderPage($imgList, $urlList) {
+    global $store_config;
+    foreach ( $store_config[$imgList] as $id=>$imgUrl): ?>
+		<a target='_blank' href="<?php echo $store_config[$urlList][$id] ;?>">
+			<img src="<?php echo $imgUrl ;?>" width=490>
+		</a>
+	<?php endforeach; 
+}
+
+if ($signed_request = parsePageSignedRequest($req)) {
+    
+    if ($signed_request->page->liked) {
+        $imgListName = 'fanPageImages';
+        $urlListName = 'fanPageImageTargetUrls';
+    } else {
+        $imgListName = 'welcomeImages';
+        $urlListName = 'welcomeImageTargetUrls';
+    }
+    
+    renderPage($imgListName, $urlListName);
+    
+}
+
 
 ?>
 
