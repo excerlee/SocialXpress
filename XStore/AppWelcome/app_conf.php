@@ -14,8 +14,14 @@ $fb_config = array(
 //The config below should be stored in a database 
 $store_config = array(
     'storeName' => 'Brilliant Store',
-    'welcomeBannerUrl'      => 'http://cloud.lbox.me/images/wholesale/201105/facebooksplash0523/en/image_01.jpg',
-    'welcomeBannerActionUrl' => 'http://www.brilliantstore.com/',
-    'fanBannerUrl' 	    => 'http://www.brilliantstore.com/img/banner-rc-helicopters.jpg',
-    'fanBannerActionUrl'     => 'http://www.brilliantstore.com/electric-rc-helicopters.html',
+    'welcomeImages'      => array(1=>'http://ec2-50-17-121-184.compute-1.amazonaws.com/brilliant/brilliant-welcome.jpg'),
+    'welcomeImageTargetUrls'  => array(1=>false),
+    'fanPageImages' 	 => array(1=>'http://ec2-50-17-121-184.compute-1.amazonaws.com/brilliant/brilliant-earphone.png',
+				  2=>'http://ec2-50-17-121-184.compute-1.amazonaws.com/brilliant/brilliant-pear.png',
+				  3=>'http://ec2-50-17-121-184.compute-1.amazonaws.com/brilliant/brilliant-coupon.png',
+				 ),
+    'fanPageImageTargetUrls'=> array(1=>'http://www.brilliantstore.com/in-ear-headphones-os-ep0051.html',
+				  2=>'http://www.brilliantstore.com/other-office-equipment-os-hq0014.html',
+				  3=>'http://www.brilliantstore.com/promotion/facebook/list.html'
+				 ),
 );

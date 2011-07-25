@@ -41,10 +41,14 @@ function parsePageSignedRequest( $req ) {
 }
   if($signed_request = parsePageSignedRequest($req)) {
 	#var_dump($signed_request);
-    if($signed_request->page->liked): ?>
-	<a target='_blank' href="<?php echo $store_config['fanBannerActionUrl'];?>"><img src="<?php echo $store_config['fanBannerUrl'];?>"></a>
-    <?php else: ?>
-	<a target='_blank' href="<?php echo $store_config['welcomeBannerActionUrl'];?>"><img src="<?php echo $store_config['welcomeBannerUrl'];?>"></a>
+    if($signed_request->page->liked): 
+	foreach ( $store_config['fanPageImages'] as $id=>$imgUrl): ?>
+		<a target='_blank' href="<?php echo $store_config['fanPageImageTargetUrls'][$id] ;?>"><img src="<?php echo $imgUrl ;?>" width=500></a>
+	<?php endforeach; ?>
+    <?php else: 
+	foreach ( $store_config['welcomeImages'] as $id=>$imgUrl): ?>
+		<a target='_blank' href="<?php echo $store_config['welcomeImageTargetUrls'][$id] ;?>"><img src="<?php echo $imgUrl ;?>" width=500></a>
+	<?php endforeach; ?>
     <?php
     endif;
   }
