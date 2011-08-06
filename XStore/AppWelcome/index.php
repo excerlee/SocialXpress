@@ -42,10 +42,14 @@ function parsePageSignedRequest( $req ) {
 
 function renderPage($imgList, $urlList) {
     global $store_config;
-    foreach ( $store_config[$imgList] as $id=>$imgUrl): ?>
-		<a target='_blank' href="<?php echo $store_config[$urlList][$id] ;?>">
+    foreach ( $store_config[$imgList] as $id=>$imgUrl) :
+		if ($store_config[$urlList][$id]) :?>
+			<a target='_blank' href="<?php echo $store_config[$urlList][$id] ;?>">
+				<img src="<?php echo $imgUrl ;?>" width=490>
+			</a>
+		<?php else: ?>
 			<img src="<?php echo $imgUrl ;?>" width=490>
-		</a>
+		<?php endif; ?>
 	<?php endforeach; 
 }
 
