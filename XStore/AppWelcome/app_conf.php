@@ -14,16 +14,23 @@ $fb_config = array(
 //The config below should be stored in a database 
 $store_config = array(
     'storeName' => 'Brilliant Store',
-
+    //Welcome images
     'welcomeImages'      => array(1=>'http://www.brilliantstore.com/promotion/facebook/banner3.jpg'),
+    //Welcome images action URLS
     'welcomeImageTargetUrls'  => array(1=>false),
 
+    //FAN page images
     'fanPageImages' 	 => array(1=>'http://www.brilliantstore.com/promotion/facebook/img/t27_1.jpg',
 				  2=>'http://www.brilliantstore.com/promotion/facebook/img/t27_2.jpg',
 				  3=>'http://www.brilliantstore.com/promotion/facebook/img/t27_3.jpg',
 				 ),
+    //FAN page images action URLs
     'fanPageImageTargetUrls'=> array(1=>'http://www.brilliantstore.com/in-ear-headphones-os-ep0051.html',
 				  2=>'http://www.brilliantstore.com/other-office-equipment-os-hq0014.html',
 				  3=>'http://www.brilliantstore.com/',
 				 ),
+    'couponWSServer'=>'http://www.brilliantstore.com',
+
 );
+
+include("./app_conf.overrides.php");
