@@ -29,6 +29,7 @@ $store_config = array(
 				  2=>'http://www.brilliantstore.com/other-office-equipment-os-hq0014.html',
 				  3=>'http://www.brilliantstore.com/',
 				 ),
+				 
     'couponWSUrl'=>'http://www.brilliantstore.com/mycart/getfbcouponcode.php',
     'couponWSToken'=>'5fb687e254e3367a96849622a53d1aab',
 

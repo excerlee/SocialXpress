@@ -13,20 +13,12 @@ require_once('./app_conf.php');
 <body>
 <?php 
 
-$user            =   null; //facebook user uid
-
-// Create our Application instance.
-$facebook = new Facebook(array(
-  'appId'  => $fb_config['appid'],
-  'secret' => $fb_config['secret'],
-  'cookie' => true,
-));
-
-//Facebook Authentication part
-$user       = $facebook->getUser();
-
-$req = $facebook->getSignedRequest();
-
+function d($d){
+    echo '<pre>';
+    print_r($d);
+    echo '</pre>';
+}
+    
 function parsePageSignedRequest( $req ) {
 //    if (isset($_REQUEST['signed_request'])) {
       if (isset($req)) {
@@ -78,7 +70,10 @@ function getCouponCode($fbId, $fbEmail) {
             '&fid='.$fbId.
             '&femail='.$fbEmail;
     
-    $result = json_decode(doCUrlCall($url));
+    $result=doCUrlCall($url);
+    printf("Curl call string is [%s], [%s]", $url, $result); 
+    $result = json_decode($result);
+    printf("JSon string is [%s]", $result); 
     if ( $result['s'] == 's') {
         $couponCode = $result['c']; 
     }
@@ -87,11 +82,35 @@ function getCouponCode($fbId, $fbEmail) {
 }
 
 
-var_dump($user);
-$fbId = $user['id'];
-$fbEmail = $user['email'];
+$user            =   null; //facebook user uid
 
-$code = getCouponCode();
+// Create our Application instance.
+$facebook = new Facebook(array(
+  'appId'  => $fb_config['appid'],
+  'secret' => $fb_config['secret'],
+  'cookie' => true,
+));
+
+//Facebook Authentication part
+$user       = $facebook->getUser();
+$req = $facebook->getSignedRequest();
+
+$fqlResult = null;
+try{
+    $fql    =   "select username, email, hometown_location, sex, email from user where uid=" . $user;
+    $param  =   array(
+        'method'    => 'fql.query',
+        'query'     => $fql,
+        'callback'  => ''
+    );
+    $fqlResult   =   $facebook->api($param);
+}
+catch(Exception $o){
+    d($o);
+}
+       
+d($fqlResult);
+$code = getCouponCode('tt', 'tt123@yahoo.com');
 
 if (isset($code)) {
     echo "<H2>Your single use coupon code is ".$code."</H2>";
