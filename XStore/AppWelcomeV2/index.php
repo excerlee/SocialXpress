@@ -75,25 +75,33 @@ function getCouponCode($fbId, $fbEmail) {
     // http://www.brilliantstore.com/mycart/getfbcouponcode.php?ftoken=5fb687e254e3367a96849622a53d1aab&fid={facebook id}&femail={facebook email}
     $url = $store_config['couponWSUrl'].
     		'?ftoken='.$store_config['couponWSToken'].
-            '&fid'=.$fbId
-            '&femail'=.$fbEmail;
+            '&fid='.$fbId.
+            '&femail='.$fbEmail;
     
     $result = json_decode(doCUrlCall($url));
     if ( $result['s'] == 's') {
         $couponCode = $result['c']; 
-    }else{
-        $storeName = $store_config['storeName'];
-        $couponCode = <<QQQ
-<h2>Looks like there is some problem with the system, please refresh the page and try again. 
-If still not working, please contact {$storeName}
-QQQ;
     }
     return $couponCode;
     
 }
 
 
+var_dump($user);
+$fbId = $user['id'];
+$fbEmail = $user['email'];
+
 $code = getCouponCode();
+
+if (isset($code)) {
+    echo "<H2>Your single use coupon code is ".$code."</H2>";
+}else{
+    $storeName = $store_config['storeName'];
+    $couponCode =<<<QQQ
+<h2>Looks like there is some problem with the system, please refresh the page and try again. 
+If still not working, please contact {$storeName}
+QQQ;
+}
 
 if ($signed_request = parsePageSignedRequest($req)) {
     
