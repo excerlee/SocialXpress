@@ -1,6 +1,7 @@
 <?php
 require_once("./common.php");
 require_once('./app_conf.php');
+require_once('./view.php');
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
@@ -13,9 +14,10 @@ require_once('./app_conf.php');
 <body>
 <?php 
 
-function d($d){
+function myDebug($d, $var){
     echo '<pre>';
-    print_r($d);
+    echo $d.'<br>';
+    print_r($var);
     echo '</pre>';
 }
     
@@ -70,10 +72,10 @@ function getCouponCode($fbId, $fbEmail) {
             '&fid='.$fbId.
             '&femail='.$fbEmail;
     
-    $result=doCUrlCall($url);
-    printf("Curl call string is [%s], [%s]", $url, $result); 
-    $result = json_decode($result);
-    printf("JSon string is [%s]", $result); 
+    $tmp = doCUrlCall($url);
+    //printf("Curl call string is [%s]<br>result is: [%s]", $url, $result); 
+    $result = json_decode($tmp, true);
+    //myDebug("JSon string is:", $result); 
     if ( $result['s'] == 's') {
         $couponCode = $result['c']; 
     }
@@ -81,63 +83,78 @@ function getCouponCode($fbId, $fbEmail) {
     
 }
 
+function getFBUserInfo($userId) {
+    
+    global $facebook;
+    
+    $fqlResult = null;
+    try{
+        $fql    =   "select username, email, hometown_location, sex, email from user where uid=" . $userId;
+        $param  =   array(
+            'method'    => 'fql.query',
+            'query'     => $fql,
+            'callback'  => ''
+        );
+        $fqlResult   =   $facebook->api($param);
+    }
+    catch(Exception $o){
+        myDebug($o);
+    }
+    return $fqlResult[0];
+}
 
-$user            =   null; //facebook user uid
+function getCouponMsg($userInfo) {
+    
+    global $store_config;
+    $storeName = $store_config['storeName'];
+    $storeUrl  = $store_config['storeUrl'];
+    
+    //myDebug("userInfo is:", $userInfo);
+    $code = getCouponCode($userInfo['username'], $userInfo['email']);
+    
+    if (isset($code)) {
+        $couponMsg=$code;
+    }else{
+        $couponMsg='ERROR';
+    }
+    return $couponMsg;
+}
 
+
+
+$user =   null; //facebook user uid
 // Create our Application instance.
 $facebook = new Facebook(array(
   'appId'  => $fb_config['appid'],
   'secret' => $fb_config['secret'],
   'cookie' => true,
-));
+)); 
 
 //Facebook Authentication part
-$user       = $facebook->getUser();
-$req = $facebook->getSignedRequest();
+$user = $facebook->getUser();
+$req  = $facebook->getSignedRequest();
 
-$fqlResult = null;
-try{
-    $fql    =   "select username, email, hometown_location, sex, email from user where uid=" . $user;
-    $param  =   array(
-        'method'    => 'fql.query',
-        'query'     => $fql,
-        'callback'  => ''
-    );
-    $fqlResult   =   $facebook->api($param);
-}
-catch(Exception $o){
-    d($o);
-}
-       
-d($fqlResult);
-$code = getCouponCode('tt', 'tt123@yahoo.com');
-
-if (isset($code)) {
-    echo "<H2>Your single use coupon code is ".$code."</H2>";
-}else{
-    $storeName = $store_config['storeName'];
-    $couponCode =<<<QQQ
-<h2>Looks like there is some problem with the system, please refresh the page and try again. 
-If still not working, please contact {$storeName}
-QQQ;
-}
 
 if ($signed_request = parsePageSignedRequest($req)) {
     
     if ($signed_request->page->liked) {
-        $imgListName = 'fanPageImages';
-        $urlListName = 'fanPageImageTargetUrls';
+        
+        $userInfo = getFBUserInfo($user);
+        $couponMsg = getCouponMsg($userInfo);
+        echo view($couponMsg);
+        if ($couponMsg == 'ERROR') {
+            echo getCouponErrorMsg();
+        }
+        
     } else {
+        
         $imgListName = 'welcomeImages';
         $urlListName = 'welcomeImageTargetUrls';
+        renderPage($imgListName, $urlListName);
     }
-    
-    renderPage($imgListName, $urlListName);
     
 }
 
-
 ?>
-
 </body>
 </html>

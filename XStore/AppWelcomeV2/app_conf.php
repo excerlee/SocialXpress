@@ -14,6 +14,8 @@ $fb_config = array(
 //The config below should be stored in a database 
 $store_config = array(
     'storeName' => 'Brilliant Store',
+    'storeUrl' => 'http://www.brilliantstore.com',
+	'storeCCEmail' => 'customercare@brilliantstore.com',
     //Welcome images
     'welcomeImages'      => array(1=>'http://www.brilliantstore.com/promotion/facebook/banner3.jpg'),
     //Welcome images action URLS
