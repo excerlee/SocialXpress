@@ -14,6 +14,9 @@ require_once('./view.php');
 <body>
 <?php 
 
+function log2Log($d, $var){
+    error_log(sprintf($d, var_export($var,true)));
+}
 function myDebug($d, $var){
     echo '<pre>';
     echo $d.'<br>';
@@ -75,7 +78,7 @@ function getCouponCode($fbId, $fbEmail) {
     $tmp = doCUrlCall($url);
     //printf("Curl call string is [%s]<br>result is: [%s]", $url, $result); 
     $result = json_decode($tmp, true);
-    //myDebug("JSon string is:", $result); 
+    log2Log("JSon string is:[%s]", $result); 
     if ( $result['s'] == 's') {
         $couponCode = $result['c']; 
     }
@@ -98,19 +101,21 @@ function getFBUserInfo($userId) {
         $fqlResult   =   $facebook->api($param);
     }
     catch(Exception $o){
-        myDebug($o);
+        log2Log("Exception is", $o);
     }
+    log2Log("userId is [%s]", $userId);
+    log2Log("fqlResult is [%s]", $fqlResult);
     return $fqlResult[0];
 }
 
-function getCouponMsg($userInfo) {
+function getCouponMsg($userId, $userInfo) {
     
     global $store_config;
     $storeName = $store_config['storeName'];
     $storeUrl  = $store_config['storeUrl'];
     
-    //myDebug("userInfo is:", $userInfo);
-    $code = getCouponCode($userInfo['username'], $userInfo['email']);
+    log2Log("userInfo is:[%s]", $userInfo);
+    $code = getCouponCode($userId, $userInfo['email']);
     
     if (isset($code)) {
         $couponMsg=$code;
@@ -139,15 +144,18 @@ if ($signed_request = parsePageSignedRequest($req)) {
     
     if ($signed_request->page->liked) {
         
+    	log2Log("ANALYTICS LOG::ISFAN::UserId[%s]", $user);
+
         $userInfo = getFBUserInfo($user);
-        $couponMsg = getCouponMsg($userInfo);
+        $couponMsg = getCouponMsg($user, $userInfo);
         echo view($couponMsg);
         if ($couponMsg == 'ERROR') {
             echo getCouponErrorMsg();
         }
         
     } else {
-        
+    	log2Log("ANALYTICS LOG::ISNOTFAN::UserId[%s]", $user);
+
         $imgListName = 'welcomeImages';
         $urlListName = 'welcomeImageTargetUrls';
         renderPage($imgListName, $urlListName);
