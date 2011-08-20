@@ -55,9 +55,10 @@ Login or logout url will be needed depending on current user state.
 Feedback
 --------
 
-File bugs or other issues [here].
+We are relying on the [GitHub issues tracker][issues] linked from above for
+feedback. File bugs or other issues [here][issues].
 
-[here]: http://bugs.developers.facebook.net/
+[issues]: http://github.com/facebook/php-sdk/issues
 
 
 
