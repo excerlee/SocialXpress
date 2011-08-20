@@ -587,8 +587,11 @@ abstract class BaseFacebook
       setcookie($name = $this->getCSRFTokenCookieName(),
                 $value = $this->state,
                 $expires = time() + 3600,
-                '/',
-                '.ec2-50-17-121-184.compute-1.amazonaws.com'); // sticks for an hour
+                "/",
+                //'.ec2-50-17-121-184.compute-1.amazonaws.com'
+		//FIXME
+                ".compute-1.amazonaws.com"
+		); // sticks for an hour
     }
   }
 
