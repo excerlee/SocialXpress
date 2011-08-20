@@ -14,5 +14,6 @@ mkdir -p $APP_DIR
 mkdir -p $BAK_DIR
 
 cp -r ../$APP/* $APP_DIR/
+rm -rf $WEB_ROOT/{conf,lib}
 cp -r ../conf ../lib $WEB_ROOT
 echo "DONE with copying files to $APP_DIR" 
