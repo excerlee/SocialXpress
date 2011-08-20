@@ -37,4 +37,4 @@ $store_config = array(
 
 );
 
-//include("./app_conf.overrides.php");
+include("./app_conf.overrides.php");

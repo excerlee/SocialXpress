@@ -136,9 +136,29 @@ $facebook = new Facebook(array(
 )); 
 
 //Facebook Authentication part
-$user = $facebook->getUser();
-$req  = $facebook->getSignedRequest();
+$user     = $facebook->getUser();
+$req      = $facebook->getSignedRequest();
+$loginUrl = $facebook->getLoginUrl(
+        array(
+            'scope'         => 'email,publish_stream,user_birthday,user_location,user_work_history,user_about_me,user_hometown'
+        )
+    );
 
+if ($user) {
+  try {
+    // Proceed knowing you have a logged in user who's authenticated.
+    $userInfo = $facebook->api('/me');
+  } catch (FacebookApiException $e) {
+    //you should use error_log($e); instead of printing the info on browser
+    log2Log($e);  // d is a debug function defined at the end of this file
+    $user = null;
+  }
+}
+
+if (!$user) {
+    echo "<script type='text/javascript'>top.location.href = '$loginUrl';</script>";
+    exit;
+}
 
 if ($signed_request = parsePageSignedRequest($req)) {
     
@@ -146,7 +166,7 @@ if ($signed_request = parsePageSignedRequest($req)) {
         
     	log2Log("ANALYTICS LOG::ISFAN::UserId[%s]", $user);
 
-        $userInfo = getFBUserInfo($user);
+        //$userInfo = getFBUserInfo($user);
         $couponMsg = getCouponMsg($user, $userInfo);
         echo view($couponMsg);
         if ($couponMsg == 'ERROR') {
