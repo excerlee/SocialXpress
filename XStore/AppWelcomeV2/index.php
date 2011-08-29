@@ -144,6 +144,23 @@ $loginUrl = $facebook->getLoginUrl(
         )
     );
 
+/* 
+ * If user first time authenticated the application facebook
+ * redirects user to baseUrl, so I checked if any code passed
+ * then redirect him to the application url 
+ * -mahmud
+ */
+if (isset($_GET['code'])){
+    header("Location: " . $fb_config['baseurl']);
+    exit;
+}
+//~~
+
+//
+if (isset($_GET['request_ids'])){
+    //user comes from invitation
+    //track them if you need
+}
 if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.

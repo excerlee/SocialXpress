@@ -8,7 +8,8 @@ $fb_config = array(
   'appid' => '231766590182305',
   'secret' => '1c53dc28d1aa0423755ee27d132ab61d',
   'cookie' => true,
-  'baseurl' => 'http://ec2-50-17-121-184.compute-1.amazonaws.com/AppWelcome/index.php',
+  //FB app's base url
+  'baseurl' => 'http://apps.facebook.com/sxstore/',
 );
 
 //The config below should be stored in a database 
