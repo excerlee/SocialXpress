@@ -9,7 +9,7 @@ $fb_config = array(
   'secret' => '1c53dc28d1aa0423755ee27d132ab61d',
   'cookie' => true,
   //FB app's base url
-  'baseurl' => 'http://apps.facebook.com/sxstore/',
+  'baseurl' => 'http://www.facebook.com/pages/BrilliantStore/185371881493200?sk=app_231766590182305',
 );
 
 //The config below should be stored in a database 
