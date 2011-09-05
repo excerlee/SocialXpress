@@ -24,10 +24,9 @@ $view=<<<QQQ
 	target="_blank"><img src="http://www.brilliantstore.com/promotion/20110810/images/t_2.jpg" border="0" width="500px"></a></div>
 <div style="text-align: left; padding: 4px;">
 <p style="font-weight: bold; color: red;">NO OTHER PURCHASES NECESSARY!</p>
-<p>What can you get for $0.01? "Like" BrilliantStore now and you can get
-a nice gift (only $0.01 shipping fee required) and 10% off for storewide
-products! This is a coupon code for BrilliantStore fans only. We welcome
-you to post our invitation to your friend and on the forums.</p>
+<p>
+What can you get for $0.01? "Like" BrilliantStore now and you can get a nice gift (only $0.01 shipping fee required) and 10% off for store wide products! This is a coupon code for BrilliantStore fans only. We welcome you to post our invitation to your friends and on the forums. We are limiting the free items to only 3,000 fans. First come, first serve. Like US Now!
+</p>
 </div>
 </div>
 
