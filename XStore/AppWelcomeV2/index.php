@@ -141,7 +141,7 @@ $req      = $facebook->getSignedRequest();
 $loginUrl = $facebook->getLoginUrl(
         array(
             //'scope'         => 'user_birthday,user_location,user_work_history,user_about_me,user_hometown'
-            'scope'         => 'email,user_birthday,user_location,user_work_history,user_about_me,user_hometown'
+            'scope'         => 'user_birthday,user_location,user_work_history,user_about_me,user_hometown'
         )
     );
 
@@ -173,14 +173,22 @@ if ($user) {
   }
 }
 
-if (!$user) {
-    echo "<script type='text/javascript'>top.location.href = '$loginUrl';</script>";
-    exit;
-}
+//Display the standard FB permission pop up to get user's permission 
+//if (!$user) {
+//    echo "<script type='text/javascript'>top.location.href = '$loginUrl';</script>";
+//    exit;
+//}
 
 if ($signed_request = parsePageSignedRequest($req)) {
     
     if ($signed_request->page->liked) {
+
+	//Display the standard FB permission pop up to get user's permission 
+	if (!$user) {
+		echo "<script type='text/javascript'>top.location.href = '$loginUrl';</script>";
+		exit;
+	}
+
         
     	log2Log("ANALYTICS LOG::ISFAN::UserId[%s]", $user);
 
